@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Твой SWAG • Визитка</title>
+    <title>GOLD SWAG • Золотой стандарт</title>
     <style>
-        /* ----- SWAG RESET & BASE ----- */
+        /* ===== ЗОЛОТОЙ SWAG CSS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,294 +13,361 @@
         }
 
         body {
-            background: #0c0c0e;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0906;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #2a1f0c 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, #1e1608 0%, transparent 40%),
+                linear-gradient(145deg, #0e0c08 0%, #1a140a 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             padding: 1.5rem;
-            color: #ffffff;
+            color: #f5e7c8;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            position: relative;
         }
 
-        /* ----- MAIN CARD (GLASS EFFECT) ----- */
-        .swag-card {
-            max-width: 760px;
+        /* Золотая пыль (декоративные частицы) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(22, 24, 28, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 2.5rem;
-            padding: 2.5rem;
-            box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.6), 
-                        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-            transition: transform 0.25s ease, box-shadow 0.4s ease;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 40% 50%, rgba(218, 165, 32, 0.04) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .swag-card:hover {
-            box-shadow: 0 30px 50px -12px #00000080, 0 0 0 1px #ffffff1a inset;
-            transform: translateY(-3px);
+        /* ===== ЗОЛОТАЯ КАРТА ===== */
+        .gold-card {
+            max-width: 820px;
+            width: 100%;
+            background: rgba(8, 6, 3, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(212, 175, 55, 0.35);
+            border-radius: 3rem;
+            padding: 2.8rem;
+            box-shadow: 
+                0 30px 50px -10px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(212, 175, 55, 0.15) inset,
+                0 0 40px rgba(212, 175, 55, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
         }
 
-        /* ----- TYPOGRAPHY SWAG ----- */
-        .badge {
+        .gold-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 
+                0 35px 60px -12px #000000,
+                0 0 0 1.5px rgba(255, 215, 0, 0.3) inset,
+                0 0 60px rgba(255, 215, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* ===== ЗОЛОТАЯ ТИПОГРАФИКА ===== */
+        .gold-badge {
             display: inline-block;
-            background: #2a2e35;
-            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, #2a200a 0%, #1a1406 100%);
+            padding: 0.4rem 1.4rem;
             border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: #a8b3cf;
-            border: 1px solid #3a3f4b;
-            margin-bottom: 1.5rem;
+            color: #d4af37;
+            border: 1px solid #b49450;
+            margin-bottom: 2rem;
             backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px #00000040, 0 0 15px #ffd7001a;
         }
 
         h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
+            font-size: 3.8rem;
+            font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, #b4c1e0 80%);
+            background: linear-gradient(135deg, #f9e076 0%, #e4b124 40%, #c59b27 70%, #f5d56e 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px #ffd70030;
+            animation: goldShine 6s ease infinite;
         }
 
-        .glow-text {
-            color: #7d8cbb;
+        @keyframes goldShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .gold-subhead {
+            color: #cfb87c;
             font-weight: 500;
-            font-size: 1.2rem;
-            margin-bottom: 1.8rem;
-            border-left: 4px solid #3c6eff;
-            padding-left: 1.2rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #d4af37;
+            padding-left: 1.5rem;
+            text-shadow: 0 0 12px #b8860b40;
         }
 
         p {
-            color: #cbd5e6;
-            font-size: 1.05rem;
+            color: #dac29c;
+            font-size: 1.08rem;
             margin-bottom: 2rem;
             max-width: 85%;
+            text-shadow: 0 1px 2px black;
         }
 
-        /* ----- STATS SWAG (FLEX GRID) ----- */
-        .stats-grid {
+        /* ===== ЗОЛОТЫЕ СТАТЫ ===== */
+        .gold-stats {
             display: flex;
-            gap: 1.8rem;
-            margin: 2.2rem 0 2rem 0;
+            gap: 1.5rem;
+            margin: 2.5rem 0 2.2rem;
             flex-wrap: wrap;
         }
 
-        .stat-item {
-            background: #1b1e24;
-            padding: 0.9rem 1.6rem;
-            border-radius: 40px;
-            border: 1px solid #2f3540;
-            box-shadow: 0 6px 10px #00000030;
+        .stat-gold {
+            background: linear-gradient(145deg, #1f180a, #120e06);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            border: 1px solid #b4945040;
+            box-shadow: 0 8px 12px #00000050, inset 0 1px 0 #ffe28b20;
+            backdrop-filter: blur(4px);
         }
 
         .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(180deg, #ffecb3 0%, #d4af37 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             display: block;
-            line-height: 1.2;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            color: #8f9bb3;
+            font-size: 0.75rem;
+            color: #bd9f5a;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 2px;
+            font-weight: 500;
         }
 
-        /* ----- КНОПКИ SWAG ----- */
-        .button-group {
+        /* ===== ЗОЛОТЫЕ КНОПКИ ===== */
+        .gold-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
-            margin: 1.8rem 0 1.2rem;
+            margin: 1.5rem 0 1.2rem;
         }
 
-        .btn {
-            padding: 0.9rem 2rem;
+        .btn-gold {
+            padding: 1rem 2.4rem;
             border-radius: 60px;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
+            gap: 10px;
+            transition: all 0.25s ease;
             font-size: 1rem;
-            border: 1px solid transparent;
+            border: 1.5px solid transparent;
             cursor: pointer;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(4px);
         }
 
-        .btn-primary {
-            background: #ffffff;
-            color: #0e1117;
-            box-shadow: 0 8px 20px #00000040;
+        .btn-primary-gold {
+            background: linear-gradient(145deg, #e9c468 0%, #bf9530 100%);
+            color: #0a0702;
+            box-shadow: 0 10px 25px #00000060, 0 0 20px #ffd70040;
+            border-color: #ffe28b;
+            text-shadow: 0 1px 0 #fff3cf;
+            font-weight: 800;
         }
 
-        .btn-primary:hover {
-            background: #e0e6ff;
-            transform: scale(1.02);
-            box-shadow: 0 10px 24px #00000060;
+        .btn-primary-gold:hover {
+            background: linear-gradient(145deg, #f7da7a 0%, #dbb444 100%);
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px #00000080, 0 0 30px #ffd90060;
+            border-color: #ffea9e;
         }
 
-        .btn-outline {
+        .btn-outline-gold {
             background: transparent;
-            border: 1.5px solid #3f4658;
-            color: #eef2fb;
+            border: 1.8px solid #b49450;
+            color: #efdbaf;
+            box-shadow: 0 4px 12px #00000030;
         }
 
-        .btn-outline:hover {
-            background: #1f2530;
-            border-color: #6d7a9c;
+        .btn-outline-gold:hover {
+            background: #2f260c;
+            border-color: #ecc454;
+            color: #ffffff;
+            box-shadow: 0 8px 18px #00000060, 0 0 12px #ffd70030;
         }
 
-        /* ----- SOCIAL ICONS (SVG стиль) ----- */
-        .social-links {
+        /* ===== ЗОЛОТЫЕ СОЦСЕТИ ===== */
+        .gold-social {
             display: flex;
-            gap: 1.2rem;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px dashed #2e3540;
+            gap: 1.8rem;
+            margin-top: 2.2rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #b4945060;
         }
 
-        .social-icon {
-            color: #9aa7c2;
+        .gold-social-link {
+            color: #c2a765;
             text-decoration: none;
-            font-size: 1rem;
             font-weight: 500;
-            transition: color 0.2s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-size: 1rem;
         }
 
-        .social-icon:hover {
-            color: white;
+        .gold-social-link:hover {
+            color: #f5d98c;
+            text-shadow: 0 0 12px gold;
         }
 
-        /* ----- FOOTER NOTE ----- */
-        .swag-footer {
-            margin-top: 1.5rem;
+        /* Футер */
+        .gold-footer {
+            margin-top: 1.8rem;
             font-size: 0.8rem;
-            color: #5f6a80;
+            color: #8a7b54;
             text-align: right;
+            letter-spacing: 1px;
         }
 
-        /* Адаптив для телефонов */
-        @media (max-width: 550px) {
-            .swag-card {
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .gold-card {
                 padding: 1.8rem;
                 border-radius: 2rem;
             }
             h1 {
-                font-size: 2.4rem;
+                font-size: 2.7rem;
             }
             p {
                 max-width: 100%;
             }
-            .stats-grid {
-                gap: 1rem;
+            .stat-gold {
+                padding: 0.7rem 1.5rem;
             }
-            .btn {
-                padding: 0.8rem 1.6rem;
+            .btn-gold {
+                padding: 0.9rem 1.8rem;
             }
         }
 
-        /* декоративный элемент */
-        .blob-bg {
-            position: fixed;
-            top: -10vh;
-            right: -10vw;
-            width: 70vw;
-            height: 70vw;
-            background: radial-gradient(circle at 30% 30%, #1f3a7a20, transparent 70%);
-            z-index: -1;
-            border-radius: 50%;
-            filter: blur(80px);
+        /* Мерцание золота */
+        .gold-shimmer {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #ffffff08, transparent);
+            transform: skewX(-20deg);
             pointer-events: none;
+            z-index: 3;
         }
     </style>
 </head>
 <body>
-    <div class="blob-bg"></div>
+    <!-- Золотая дымка на фоне -->
+    <div style="position:fixed; width:100%; height:100%; background:radial-gradient(circle at 30% 40%, #ffd70008 0%, transparent 50%); pointer-events:none; z-index:1;"></div>
 
-    <main class="swag-card">
-        <!-- Бейдж статуса -->
-        <span class="badge">🚀 github pages • swag edition</span>
+    <main class="gold-card">
+        <span class="gold-badge">👑 24K SWAG • PREMIUM</span>
 
-        <!-- Заголовок (замени на своё имя/ник) -->
         <h1>
-            привет, я <br> 
-            твой SWAG
+            золотой<br> 
+            стандарт
         </h1>
-        <div class="glow-text">разработка • дизайн • минимализм</div>
+        <div class="gold-subhead">роскошь • код • стиль</div>
         
-        <!-- Описание (подставь своё) -->
         <p>
-            Это готовая витрина для твоего GitHub Pages. 
-            Тёмный стекло-морфизм, плавные анимации, 
-            и никакого бэкенда — только хардкорный CSS.
+            Эксклюзивная золотая развёртка для GitHub Pages. 
+            Премиальный тёмный фон, настоящие золотые градиенты, 
+            эффект свечения и аристократичный минимализм.
         </p>
 
-        <!-- Блок с метриками / скилами -->
-        <div class="stats-grid">
-            <div class="stat-item">
+        <!-- Золотые показатели -->
+        <div class="gold-stats">
+            <div class="stat-gold">
                 <span class="stat-number">∞</span>
                 <span class="stat-label">проектов</span>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">свобода</span>
+            <div class="stat-gold">
+                <span class="stat-number">Au</span>
+                <span class="stat-label">качество</span>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">онлайн</span>
+            <div class="stat-gold">
+                <span class="stat-number">999</span>
+                <span class="stat-label">проба</span>
             </div>
         </div>
 
-        <!-- Кнопки действий (ссылки замени на реальные) -->
-        <div class="button-group">
-            <a href="#" class="btn btn-primary">
-                <span>📁</span> проекты
+        <!-- Кнопки (меняй ссылки) -->
+        <div class="gold-buttons">
+            <a href="#" class="btn-gold btn-primary-gold">
+                <span>🏆</span> портфолио
             </a>
-            <a href="#" class="btn btn-outline">
-                <span>📄</span> резюме
+            <a href="#" class="btn-gold btn-outline-gold">
+                <span>📜</span> резюме
             </a>
-            <a href="#" class="btn btn-outline">
-                <span>✉️</span> контакт
+            <a href="#" class="btn-gold btn-outline-gold">
+                <span>✧</span> контакт
             </a>
         </div>
 
-        <!-- Соцсети / контакты -->
-        <div class="social-links">
-            <a href="#" class="social-icon">
+        <!-- Соцсети -->
+        <div class="gold-social">
+            <a href="#" class="gold-social-link">
                 <span>🐙</span> github
             </a>
-            <a href="#" class="social-icon">
-                <span>💬</span> telegram
+            <a href="#" class="gold-social-link">
+                <span>💎</span> telegram
             </a>
-            <a href="#" class="social-icon">
-                <span>𝕏</span> twitter
+            <a href="#" class="gold-social-link">
+                <span>𝕏</span> x.com
             </a>
-            <a href="#" class="social-icon">
-                <span>📧</span> email
+            <a href="#" class="gold-social-link">
+                <span>📧</span> почта
             </a>
         </div>
 
-        <div class="swag-footer">
-            <span>swag // github pages deploy ⚡</span>
+        <div class="gold-footer">
+            <span>gold edition • github pages deploy ✦</span>
         </div>
+        
+        <!-- Анимированный блик (автоматически) -->
+        <div class="gold-shimmer" style="animation: shimmerSweep 8s infinite;"></div>
     </main>
+
+    <style>
+        /* Анимация блика по золотой карте */
+        @keyframes shimmerSweep {
+            0% { left: -100%; opacity: 0; }
+            10% { opacity: 0.3; }
+            20% { left: 120%; opacity: 0; }
+            100% { left: 120%; opacity: 0; }
+        }
+    </style>
 </body>
 </html>
