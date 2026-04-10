@@ -16,6 +16,107 @@
             overflow-x: hidden;
             width: 100%;
         }
+        /* Модальное окно */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-modal .modal-content {
+            max-width: 450px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            color: #d4af37;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ffd700;
+            transform: scale(1.2);
+        }
+
+        /* Золотые инпуты */
+        .gold-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(20, 15, 5, 0.8);
+            border: 1.5px solid #b49450;
+            border-radius: 30px;
+            color: #f5e7c8;
+            font-size: 1rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .gold-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            background: rgba(30, 20, 5, 0.9);
+        }
+
+        .gold-input::placeholder {
+            color: #8a7b54;
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .form-status.success {
+            color: #4ade80;
+        }
+
+        .form-status.error {
+            color: #f87171;
+        }
+
+        /* Счетчик посетителей */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(8, 6, 3, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
 
         body {
             background: #0a0906;
@@ -396,6 +497,165 @@
         
         <!-- Анимированный блик -->
         <div class="gold-shimmer"></div>
+        <div class="contact-modal" id="contactModal">
+            <div class="modal-content gold-card">
+                <span class="close-modal">&times;</span>
+                <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Связаться</h2>
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Ваше имя" required class="gold-input">
+                    <input type="email" id="email" placeholder="Email" required class="gold-input">
+                    <textarea id="message" placeholder="Сообщение" required class="gold-input" rows="4"></textarea>
+                    <button type="submit" class="btn-gold btn-primary-gold" style="width: 100%;">
+                        <span>✨</span> Отправить
+                    </button>
+                </form>
+                <div id="formStatus" class="form-status"></div>
+            </div>
+        </div>
+        
+        <!-- Счетчик посетителей -->
+        <div class="visitor-counter" id="visitorCounter">
+            <span>👑</span> <span id="visitorCount">...</span>
+        </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Инициализация функционала
+        initContactForm();
+        initVisitorCounter();
+        updateLinks();
+    });
+
+    // Обработка формы контактов
+    function initContactForm() {
+        const modal = document.getElementById('contactModal');
+        const contactBtn = document.querySelector('a[href="#"]:nth-child(3)'); // Кнопка "контакт"
+        const closeBtn = document.querySelector('.close-modal');
+        const form = document.getElementById('contactForm');
+        const statusDiv = document.getElementById('formStatus');
+
+        // Открытие модалки
+        if (contactBtn) {
+            contactBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'flex';
+            });
+        }
+
+        // Закрытие
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Клик вне модалки
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Отправка формы
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                statusDiv.textContent = 'Отправка...';
+                statusDiv.className = 'form-status';
+                
+                try {
+                    const { error } = await supabase
+                        .from('contacts')
+                        .insert([{ 
+                            name, 
+                            email, 
+                            message,
+                            created_at: new Date()
+                        }]);
+                    
+                    if (error) throw error;
+                    
+                    statusDiv.textContent = '✓ Сообщение отправлено! Свяжемся с вами в ближайшее время.';
+                    statusDiv.className = 'form-status success';
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        statusDiv.textContent = '';
+                    }, 3000);
+                    
+                } catch (error) {
+                    statusDiv.textContent = '✗ Ошибка отправки. Попробуйте позже.';
+                    statusDiv.className = 'form-status error';
+                    console.error('Error:', error);
+                }
+            });
+        }
+    }
+
+    // Счетчик посетителей
+    async function initVisitorCounter() {
+        try {
+            // Запись посещения
+            const { error: insertError } = await supabase
+                .from('visitors')
+                .insert([{ 
+                    visited_at: new Date(),
+                    page: 'landing'
+                }]);
+            
+            if (insertError) console.error('Visitor insert error:', insertError);
+            
+            // Получение общего количества
+            const { count, error: countError } = await supabase
+                .from('visitors')
+                .select('*', { count: 'exact', head: true });
+            
+            if (!countError && count !== null) {
+                document.getElementById('visitorCount').textContent = count;
+            }
+            
+        } catch (error) {
+            console.error('Visitor counter error:', error);
+        }
+    }
+
+    // Обновление ссылок
+    function updateLinks() {
+        // Портфолио
+        const portfolioBtn = document.querySelector('a[href="#"]:nth-child(1)');
+        if (portfolioBtn) {
+            portfolioBtn.href = 'https://github.com/ваш-username';
+            portfolioBtn.target = '_blank';
+        }
+        
+        // Резюме
+        const resumeBtn = document.querySelector('a[href="#"]:nth-child(2)');
+        if (resumeBtn) {
+            resumeBtn.href = '#resume';
+        }
+        
+        // Соцсети
+        const socialLinks = document.querySelectorAll('.gold-social-link');
+        socialLinks[0].href = 'https://github.com/ваш-username';
+        socialLinks[1].href = 'https://t.me/ваш-username';
+        socialLinks[2].href = 'https://x.com/ваш-username';
+        socialLinks[3].href = 'mailto:ваш@email.com';
+        
+        // Открывать внешние ссылки в новой вкладке
+        socialLinks.forEach(link => {
+            if (link.href.startsWith('http')) {
+                link.target = '_blank';
+            }
+        });
+    }
+</script>
 </body>
 </html>
