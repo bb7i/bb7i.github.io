@@ -2,660 +2,71 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>GOLD SWAG • Золотой стандарт</title>
-    <style>
-        /* ===== СБРОС ВСЕГО И ФИКС СКРОЛЛА ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            overflow-x: hidden;
-            width: 100%;
-        }
-        /* Модальное окно */
-        .contact-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-modal .modal-content {
-            max-width: 450px;
-            position: relative;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 2rem;
-            color: #d4af37;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            color: #ffd700;
-            transform: scale(1.2);
-        }
-
-        /* Золотые инпуты */
-        .gold-input {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(20, 15, 5, 0.8);
-            border: 1.5px solid #b49450;
-            border-radius: 30px;
-            color: #f5e7c8;
-            font-size: 1rem;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
-        }
-
-        .gold-input:focus {
-            outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            background: rgba(30, 20, 5, 0.9);
-        }
-
-        .gold-input::placeholder {
-            color: #8a7b54;
-        }
-
-        .form-status {
-            margin-top: 1rem;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .form-status.success {
-            color: #4ade80;
-        }
-
-        .form-status.error {
-            color: #f87171;
-        }
-
-        /* Счетчик посетителей */
-        .visitor-counter {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(8, 6, 3, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            border: 1px solid #d4af37;
-            color: #d4af37;
-            font-weight: 600;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        body {
-            background: #0a0906;
-            background-image: 
-                radial-gradient(circle at 20% 30%, #2a1f0c 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, #1e1608 0%, transparent 40%),
-                linear-gradient(145deg, #0e0c08 0%, #1a140a 100%);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 1.5rem;
-            color: #f5e7c8;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            position: relative;
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0;
-        }
-
-        /* Золотая пыль (декоративные частицы) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 30%),
-                radial-gradient(circle at 40% 50%, rgba(218, 165, 32, 0.04) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ===== ЗОЛОТАЯ КАРТА ===== */
-        .gold-card {
-            max-width: 820px;
-            width: 100%;
-            margin: 0 auto;
-            background: rgba(8, 6, 3, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(212, 175, 55, 0.35);
-            border-radius: 3rem;
-            padding: 2.8rem;
-            box-shadow: 
-                0 30px 50px -10px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(212, 175, 55, 0.15) inset,
-                0 0 40px rgba(212, 175, 55, 0.1);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            z-index: 2;
-        }
-
-        .gold-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 
-                0 35px 60px -12px #000000,
-                0 0 0 1.5px rgba(255, 215, 0, 0.3) inset,
-                0 0 60px rgba(255, 215, 0, 0.15);
-            transform: translateY(-5px);
-        }
-
-        /* ===== ЗОЛОТАЯ ТИПОГРАФИКА ===== */
-        .gold-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #2a200a 0%, #1a1406 100%);
-            padding: 0.4rem 1.4rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #d4af37;
-            border: 1px solid #b49450;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 2px 8px #00000040, 0 0 15px #ffd7001a;
-        }
-
-        h1 {
-            font-size: 3.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #f9e076 0%, #e4b124 40%, #c59b27 70%, #f5d56e 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            text-shadow: 0 2px 20px #ffd70030;
-            animation: goldShine 6s ease infinite;
-            word-break: break-word;
-        }
-
-        @keyframes goldShine {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .gold-subhead {
-            color: #cfb87c;
-            font-weight: 500;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid #d4af37;
-            padding-left: 1.5rem;
-            text-shadow: 0 0 12px #b8860b40;
-        }
-
-        p {
-            color: #dac29c;
-            font-size: 1.08rem;
-            margin-bottom: 2rem;
-            max-width: 100%;
-            text-shadow: 0 1px 2px black;
-            word-wrap: break-word;
-        }
-
-        /* ===== ЗОЛОТЫЕ СТАТЫ ===== */
-        .gold-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin: 2.5rem 0 2.2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-gold {
-            background: linear-gradient(145deg, #1f180a, #120e06);
-            padding: 1rem 2rem;
-            border-radius: 60px;
-            border: 1px solid #b4945040;
-            box-shadow: 0 8px 12px #00000050, inset 0 1px 0 #ffe28b20;
-            backdrop-filter: blur(4px);
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(180deg, #ffecb3 0%, #d4af37 80%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: block;
-            line-height: 1.1;
-            letter-spacing: -0.01em;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: #bd9f5a;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
-
-        /* ===== ЗОЛОТЫЕ КНОПКИ ===== */
-        .gold-buttons {
-            display: flex;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            margin: 1.5rem 0 1.2rem;
-        }
-
-        .btn-gold {
-            padding: 1rem 2.4rem;
-            border-radius: 60px;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.25s ease;
-            font-size: 1rem;
-            border: 1.5px solid transparent;
-            cursor: pointer;
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-primary-gold {
-            background: linear-gradient(145deg, #e9c468 0%, #bf9530 100%);
-            color: #0a0702;
-            box-shadow: 0 10px 25px #00000060, 0 0 20px #ffd70040;
-            border-color: #ffe28b;
-            text-shadow: 0 1px 0 #fff3cf;
-            font-weight: 800;
-        }
-
-        .btn-primary-gold:hover {
-            background: linear-gradient(145deg, #f7da7a 0%, #dbb444 100%);
-            transform: scale(1.03);
-            box-shadow: 0 15px 30px #00000080, 0 0 30px #ffd90060;
-            border-color: #ffea9e;
-        }
-
-        .btn-outline-gold {
-            background: transparent;
-            border: 1.8px solid #b49450;
-            color: #efdbaf;
-            box-shadow: 0 4px 12px #00000030;
-        }
-
-        .btn-outline-gold:hover {
-            background: #2f260c;
-            border-color: #ecc454;
-            color: #ffffff;
-            box-shadow: 0 8px 18px #00000060, 0 0 12px #ffd70030;
-        }
-
-        /* ===== ЗОЛОТЫЕ СОЦСЕТИ ===== */
-        .gold-social {
-            display: flex;
-            gap: 1.8rem;
-            margin-top: 2.2rem;
-            padding-top: 1.5rem;
-            border-top: 1px dashed #b4945060;
-            flex-wrap: wrap;
-        }
-
-        .gold-social-link {
-            color: #c2a765;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-        }
-
-        .gold-social-link:hover {
-            color: #f5d98c;
-            text-shadow: 0 0 12px gold;
-        }
-
-        /* Футер */
-        .gold-footer {
-            margin-top: 1.8rem;
-            font-size: 0.8rem;
-            color: #8a7b54;
-            text-align: right;
-            letter-spacing: 1px;
-        }
-
-        /* Адаптив */
-        @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
-            
-            .gold-card {
-                padding: 1.5rem;
-                border-radius: 2rem;
-                margin: 0 auto;
-            }
-            
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            p {
-                max-width: 100%;
-            }
-            
-            .stat-gold {
-                padding: 0.7rem 1.5rem;
-            }
-            
-            .btn-gold {
-                padding: 0.9rem 1.8rem;
-            }
-            
-            .gold-buttons {
-                gap: 0.8rem;
-            }
-        }
-
-        /* Мерцание золота */
-        .gold-shimmer {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, #ffffff08, transparent);
-            transform: skewX(-20deg);
-            pointer-events: none;
-            z-index: 3;
-            animation: shimmerSweep 8s infinite;
-        }
-
-        @keyframes shimmerSweep {
-            0% { left: -100%; opacity: 0; }
-            10% { opacity: 0.3; }
-            20% { left: 120%; opacity: 0; }
-            100% { left: 120%; opacity: 0; }
-        }
-
-        /* Дополнительная страховка от скролла */
-        .gold-card * {
-            max-width: 100%;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализатор лог-файлов - самое частое имя</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Золотая дымка на фоне -->
-    <div style="position:fixed; width:100%; height:100%; background:radial-gradient(circle at 30% 40%, #ffd70008 0%, transparent 50%); pointer-events:none; z-index:1;"></div>
+    <div class="container">
+        <header>
+            <h1>📊 Анализатор лог-файлов</h1>
+            <p>Загрузите лог-файл, и приложение определит самое часто встречающееся имя</p>
+        </header>
 
-    <main class="gold-card">
-        <span class="gold-badge">👑 24K SWAG • PREMIUM</span>
-
-        <h1>
-            золотой<br> 
-            стандарт
-        </h1>
-        <div class="gold-subhead">роскошь • код • стиль</div>
-        
-        <p>
-            Эксклюзивная золотая развёртка для GitHub Pages. 
-            Премиальный тёмный фон, настоящие золотые градиенты, 
-            эффект свечения и аристократичный минимализм.
-        </p>
-
-        <!-- Золотые показатели -->
-        <div class="gold-stats">
-            <div class="stat-gold">
-                <span class="stat-number">∞</span>
-                <span class="stat-label">проектов</span>
+        <main>
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <p>Перетащите файл сюда или нажмите для выбора</p>
+                    <input type="file" id="fileInput" accept=".log,.txt,.csv" hidden>
+                    <button class="btn btn-outline" id="selectFileBtn">Выбрать файл</button>
+                </div>
             </div>
-            <div class="stat-gold">
-                <span class="stat-number">Au</span>
-                <span class="stat-label">качество</span>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="stats-card">
+                    <h2>🏆 Самое частое имя</h2>
+                    <div class="top-name" id="topName">-</div>
+                    <div class="top-count" id="topCount">-</div>
+                </div>
+
+                <div class="stats-card">
+                    <h3>📈 Топ-10 имён</h3>
+                    <div class="top-list" id="topList"></div>
+                </div>
+
+                <div class="stats-card">
+                    <h3>📋 Общая статистика</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Всего записей:</span>
+                            <span class="stat-value" id="totalEntries">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Уникальных имён:</span>
+                            <span class="stat-value" id="uniqueNames">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Имя с максимальной частотой:</span>
+                            <span class="stat-value" id="maxFrequency">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h3>📄 Превью файла (первые 10 строк)</h3>
+                    <pre id="filePreview" class="file-preview"></pre>
+                </div>
             </div>
-            <div class="stat-gold">
-                <span class="stat-number">999</span>
-                <span class="stat-label">проба</span>
-            </div>
-        </div>
 
-        <!-- Кнопки (меняй ссылки) -->
-        <div class="gold-buttons">
-            <a href="#" class="btn-gold btn-primary-gold">
-                <span>🏆</span> портфолио
-            </a>
-            <a href="#" class="btn-gold btn-outline-gold">
-                <span>📜</span> резюме
-            </a>
-            <a href="#" class="btn-gold btn-outline-gold">
-                <span>✧</span> контакт
-            </a>
-        </div>
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+        </main>
 
-        <!-- Соцсети -->
-        <div class="gold-social">
-            <a href="#" class="gold-social-link">
-                <span>🐙</span> github
-            </a>
-            <a href="#" class="gold-social-link">
-                <span>💎</span> telegram
-            </a>
-            <a href="#" class="gold-social-link">
-                <span>𝕏</span> x.com
-            </a>
-            <a href="#" class="gold-social-link">
-                <span>📧</span> почта
-            </a>
-        </div>
+        <footer>
+            <p>Приложение анализирует лог-файлы и находит самые частые имена</p>
+        </footer>
+    </div>
 
-        <div class="gold-footer">
-            <span>gold edition • github pages deploy ✦</span>
-        </div>
-        
-        <!-- Анимированный блик -->
-        <div class="gold-shimmer"></div>
-        <div class="contact-modal" id="contactModal">
-            <div class="modal-content gold-card">
-                <span class="close-modal">&times;</span>
-                <h2 style="font-size: 2rem; margin-bottom: 1.5rem;">Связаться</h2>
-                <form id="contactForm">
-                    <input type="text" id="name" placeholder="Ваше имя" required class="gold-input">
-                    <input type="email" id="email" placeholder="Email" required class="gold-input">
-                    <textarea id="message" placeholder="Сообщение" required class="gold-input" rows="4"></textarea>
-                    <button type="submit" class="btn-gold btn-primary-gold" style="width: 100%;">
-                        <span>✨</span> Отправить
-                    </button>
-                </form>
-                <div id="formStatus" class="form-status"></div>
-            </div>
-        </div>
-        
-        <!-- Счетчик посетителей -->
-        <div class="visitor-counter" id="visitorCounter">
-            <span>👑</span> <span id="visitorCount">...</span>
-        </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Инициализация функционала
-        initContactForm();
-        initVisitorCounter();
-        updateLinks();
-    });
-
-    // Обработка формы контактов
-    function initContactForm() {
-        const modal = document.getElementById('contactModal');
-        const contactBtn = document.querySelector('a[href="#"]:nth-child(3)'); // Кнопка "контакт"
-        const closeBtn = document.querySelector('.close-modal');
-        const form = document.getElementById('contactForm');
-        const statusDiv = document.getElementById('formStatus');
-
-        // Открытие модалки
-        if (contactBtn) {
-            contactBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'flex';
-            });
-        }
-
-        // Закрытие
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-        }
-
-        // Клик вне модалки
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Отправка формы
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-                
-                statusDiv.textContent = 'Отправка...';
-                statusDiv.className = 'form-status';
-                
-                try {
-                    const { error } = await supabase
-                        .from('contacts')
-                        .insert([{ 
-                            name, 
-                            email, 
-                            message,
-                            created_at: new Date()
-                        }]);
-                    
-                    if (error) throw error;
-                    
-                    statusDiv.textContent = '✓ Сообщение отправлено! Свяжемся с вами в ближайшее время.';
-                    statusDiv.className = 'form-status success';
-                    form.reset();
-                    
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                        statusDiv.textContent = '';
-                    }, 3000);
-                    
-                } catch (error) {
-                    statusDiv.textContent = '✗ Ошибка отправки. Попробуйте позже.';
-                    statusDiv.className = 'form-status error';
-                    console.error('Error:', error);
-                }
-            });
-        }
-    }
-
-    // Счетчик посетителей
-    async function initVisitorCounter() {
-        try {
-            // Запись посещения
-            const { error: insertError } = await supabase
-                .from('visitors')
-                .insert([{ 
-                    visited_at: new Date(),
-                    page: 'landing'
-                }]);
-            
-            if (insertError) console.error('Visitor insert error:', insertError);
-            
-            // Получение общего количества
-            const { count, error: countError } = await supabase
-                .from('visitors')
-                .select('*', { count: 'exact', head: true });
-            
-            if (!countError && count !== null) {
-                document.getElementById('visitorCount').textContent = count;
-            }
-            
-        } catch (error) {
-            console.error('Visitor counter error:', error);
-        }
-    }
-
-    // Обновление ссылок
-    function updateLinks() {
-        // Портфолио
-        const portfolioBtn = document.querySelector('a[href="#"]:nth-child(1)');
-        if (portfolioBtn) {
-            portfolioBtn.href = 'https://github.com/ваш-username';
-            portfolioBtn.target = '_blank';
-        }
-        
-        // Резюме
-        const resumeBtn = document.querySelector('a[href="#"]:nth-child(2)');
-        if (resumeBtn) {
-            resumeBtn.href = '#resume';
-        }
-        
-        // Соцсети
-        const socialLinks = document.querySelectorAll('.gold-social-link');
-        socialLinks[0].href = 'https://github.com/ваш-username';
-        socialLinks[1].href = 'https://t.me/ваш-username';
-        socialLinks[2].href = 'https://x.com/ваш-username';
-        socialLinks[3].href = 'mailto:ваш@email.com';
-        
-        // Открывать внешние ссылки в новой вкладке
-        socialLinks.forEach(link => {
-            if (link.href.startsWith('http')) {
-                link.target = '_blank';
-            }
-        });
-    }
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
